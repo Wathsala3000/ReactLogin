@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Joi = require('joi');
 const User = require('../models/user');
-const bcrypt = require('brypt');
+const bcrypt = require('bcrypt');
+
 
 router.post("/",async(req,res)=>{
     try{
@@ -28,3 +29,5 @@ router.post("/",async(req,res)=>{
         res.status(500).send({message:"Internal Server Error"});
     }
 });
+
+module.exports = router;
