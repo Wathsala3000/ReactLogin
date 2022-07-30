@@ -1,0 +1,19 @@
+import styles from '../style.css';
+
+const mainpage = () => {
+    const handleSignout =()=>{
+        localStorage.removeItem('token');
+        window.location.reload();
+    }    
+    return(
+        <div className={styles.main_container}>
+            <nav className={styles.navebar}>
+                <button className={styles.white_btn} onClick={handleSignout}>
+                    Signout
+                </button>
+            </nav>
+        </div>
+    );
+}
+
+export default mainpage;

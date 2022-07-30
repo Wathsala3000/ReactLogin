@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import styles from './style.css';
+import styles from '../style.css';
 import axios from 'axios';
 const Signup = () => {
 
 const navigate = useNavigate();
 
-const [userdata, setUserData] = useState({
+const [userData, setUserData] = useState({
         firstName:"",
         lastName:"",
         email:"",
@@ -14,15 +14,15 @@ const [userdata, setUserData] = useState({
 });
 
 const [error,setError] = useState("");
-const handelChange = ({currenTarget : input}) => {
-    setUserData({...data, [input.name]: input.value});
+const handleFormChange = ({currenTarget : input}) => {
+    setUserData({...userData, [input.name]: input.value});
 }
 
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
         const url = "http://localhost:8080/api/users";
-        const {data:res} = await axios.post(url,userdata);
+        const {data:res} = await axios.post(url,userData);
         navigate("/login");
         console.Console.log(res.message);
     }catch(error){
@@ -35,60 +35,57 @@ const handleSubmit = async (e) => {
 
 
     }
-
 }
     return(
-        <div className={style.Signup_container}>
-            <div className={style.signup_for_container}>
-                <div className={style.right}>
+        <div className={styles.signup_container}>
+            <div className={styles.signup_form_container}>
+                <div className={styles.right}>
                     <h3>Welcome to React</h3>
-                    <Link to='/logn'>
-                        <button type='button' className={style.btn_white}>
-                            Sign in
+                    <Link to='/login'>
+                        <button type='button' className={styles.btn_white}>
+                            Sign up
                         </button>
                     </Link>
                 </div>
-                <div className={style.left}>
-                    <form action={handleSubmit} className={style.form_container}>
+                <div className={styles.left}>
+                    <form onSubmit={handleSubmit} className={styles.form_container}>
                         <h2>Create Account</h2>
                         <input type='text'
                             name="firstname"
                             placeholder="First Name"
                             onChange={handleFormChange}
-                            value={data.firstName}
+                            value={userData.firstName}
                             required
-                            className={style.input} 
+                            className={styles.input} 
                         />
                          <input type='text'
                             name="lastname"
                             placeholder="Last Name"
                             onChange={handleFormChange}
-                            value={data.lastName}
+                            value={userData.lastName}
                             required
-                            className={style.input} 
+                            className={styles.input} 
                         />
                          <input type='email'
                             name="email"
                             placeholder="Email"
                             onChange={handleFormChange}
-                            value={data.email}
+                            value={userData.email}
                             required
-                            className={style.input} 
+                            className={styles.input} 
                         />
                          <input type='password'
                             name="password"
                             placeholder="Password"
                             onChange={handleFormChange}
-                            value={data.password}
+                            value={userData.password}
                             required
-                            className={style.input} 
+                            className={styles.input} 
                         />
-                        {error && <div className={style.error_message}>{error}</div>}
-                        <button type='submit' className={style.green_btn}>
+                        {error && <div className={styles.error_message}>{error}</div>}
+                        <button type='submit' className={styles.green_btn}>
                             Sign Up
                         </button>
-
-
                     </form>
                 </div>
                 
