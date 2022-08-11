@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 module.exports.db = () => {
     const connectionParams = {
         useNewUrlParser : true,
@@ -7,8 +6,7 @@ module.exports.db = () => {
     };
 
     try{
-        console.log(process.env.db);
-        mongoose.connect(process.env.db,connectionParams);
+        mongoose.connect(process.env.db, connectionParams);
         console.log('Connected to DB successfully');
     }catch(error){
         console.log(error);

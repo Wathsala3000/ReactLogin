@@ -4,8 +4,8 @@ const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 
 const userSchema = new mongoose.Schema({
-    fistname : {type: String, required: true},
-    lastname : {type: String, required: true},
+    firstName : {type: String, required: true},
+    lastName : {type: String, required: true},
     email : {type: String, required: true},
     password : {type: String, required: true},
 });
@@ -17,17 +17,25 @@ userSchema.methods.generateAuthToken = function(){
 
 const User = mongoose.model("user",userSchema);
 
-const validate = (data)=>{
+const validateUser = (data)=>{
     const schema = Joi.object({
-        fistname: Joi.String().required().label("First Name"),
-        lastname: Joi.String().required().label("Last Name"),
-        email: Joi.String().required().label("Email"),
-        password: Joi.String().required().label("Password")
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().required()
     });
     return schema.validate(data);
 }
 
-module.exports= {User,validate};
+const validateLogin = (data)=>{
+    const schema = Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().required()
+    });
+    return schema.validate(data);
+}
+
+module.exports= {User,validateUser,validateLogin};
 
 
 

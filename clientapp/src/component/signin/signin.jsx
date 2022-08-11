@@ -5,28 +5,28 @@ import axios from 'axios';
 
 const Signin = () => {
     
-    const [userData, setUserData] = useState({
+    const [loginData, setLoginData] = useState({
         email:"",
-        pasword:""
+        password:""
     });
 
     const [error,setError] = useState("");
-    const handleFormChange = ({event}) => {
-    setUserData({...userData, [event.target.name]: event.target.value});
+    const handleFormChange = (event) => {
+    setLoginData({...loginData, [event.target.name]: event.target.value});
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const url = "http://localhost:8080/api/auth";
-            const {data:res} = await axios.post(url,userData);
+            const url = "http://localhost:3001/api/auth";
+            const {data:res} = await axios.post(url,loginData);
             localStorage.setItem('token',res.data);
-            window.location("/");
-            console.Console.log(res.message);
+            window.location.replace("/");
+            console.log(res.message);
         }catch(error){
             if(error.response && 
             error.response.status >= 400 && 
-            error.respons.status <= 500 ){
+            error.respons.status <= 500 ){ 
                 setError(error.response.data.message);
             }
         }
@@ -37,7 +37,7 @@ const Signin = () => {
             <div className={styles.login_form_container}>
                 <div className={styles.right}>
                     <h3>Welcome to React</h3>
-                    <Link to='/logn'>
+                    <Link to='/signin'>
                         <button type='button' className={styles.btn_white}>
                             Sign in
                         </button>
@@ -50,7 +50,7 @@ const Signin = () => {
                             name="email"
                             placeholder="Email"
                             onChange={handleFormChange}
-                            value={userData.email}
+                            value={loginData.email}
                             required
                             className={styles.input} 
                         />
@@ -58,7 +58,7 @@ const Signin = () => {
                             name="password"
                             placeholder="Password"
                             onChange={handleFormChange}
-                            value={userData.password}
+                            value={loginData.password}
                             required
                             className={styles.input} 
                         />

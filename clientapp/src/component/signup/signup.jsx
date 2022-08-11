@@ -10,21 +10,22 @@ const [userData, setUserData] = useState({
         firstName:"",
         lastName:"",
         email:"",
-        pasword:""
+        password:""
 });
 
 const [error,setError] = useState("");
-const handleFormChange = ({currenTarget : input}) => {
-    setUserData({...userData, [input.name]: input.value});
+
+const handleFormChange = (event) => {
+    setUserData({...userData, [event.target.name]: event.target.value});
 }
 
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const url = "http://localhost:8080/api/users";
+        const url = "http://localhost:3001/api/users";
         const {data:res} = await axios.post(url,userData);
         navigate("/login");
-        console.Console.log(res.message);
+        console.log(res.message);
     }catch(error){
         if(error.response && 
            error.response.status >= 400 && 
@@ -51,7 +52,7 @@ const handleSubmit = async (e) => {
                     <form onSubmit={handleSubmit} className={styles.form_container}>
                         <h2>Create Account</h2>
                         <input type='text'
-                            name="firstname"
+                            name="firstName"
                             placeholder="First Name"
                             onChange={handleFormChange}
                             value={userData.firstName}
@@ -59,7 +60,7 @@ const handleSubmit = async (e) => {
                             className={styles.input} 
                         />
                          <input type='text'
-                            name="lastname"
+                            name="lastName"
                             placeholder="Last Name"
                             onChange={handleFormChange}
                             value={userData.lastName}

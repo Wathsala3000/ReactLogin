@@ -1,14 +1,16 @@
 const router = require('express').Router();
 const Joi = require('joi');
-const User = require('../models/user');
+const {User,validateLogin} = require('../models/user');
 const bcrypt = require('bcrypt');
+const cors = require("cors");
 
 
-router.post("/",async(req,res)=>{
+
+router.post("/",cors(),async(req,res)=>{
     try{
-        const{erorr} = validate(req.body);
+        const{error} = validateLogin(req.body);
         if(error)
-        return res.status(400).send({message: erorr.details[0].message});
+        return res.status(400).send({message: error.details[0].message});
 
         const user = await User.findOne({email: req.body.email});
 
@@ -24,7 +26,7 @@ router.post("/",async(req,res)=>{
             return res.status(401).send({message:"Invalid Email or Password"});
         
         const token = user.generateAuthToken();
-        res.status(200).send({data, message:"Logged in sucessfully"});
+        res.status(200).send({data: token, message:"Logged in sucessfully"});
     }catch(error){
         res.status(500).send({message:"Internal Server Error"});
     }
